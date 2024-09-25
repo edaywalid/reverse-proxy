@@ -63,6 +63,26 @@ func (c *Cache) RemoveItem(key string) {
 	delete(c.items, key)
 }
 
+func (c *Cache) cleanUpExpired() {
+	c.lock.Lock()
+	defer c.lock.Unlock()
+
+	for key, item := range c.items {
+		if time.Since(item.Created()) > utils.CacheExpiration {
+			delete(c.items, key)
+		}
+	}
+}
+
+func (c *Cache) StartCleanUp(interval time.Duration) {
+	go func() {
+		for {
+			time.Sleep(interval)
+			c.cleanUpExpired()
+		}
+	}()
+}
+
 func (c *Cache) Items() map[string]CacheItem {
 	return c.items
 }
