@@ -1,7 +1,7 @@
 runc:
-	docker run -rm -d -p 8081:80 --name=nginx1 nginx 
-	docker run -rm -d -p 8082:80 --name=nginx2 nginx
-	docker run -rm -d -p 8083:80 --name=nginx3 nginx
+	docker run --rm -d -p 8001:80 --name=nginx1 nginx 
+	docker run --rm -d -p 8002:80 --name=nginx2 nginx
+	docker run --rm -d -p 8003:80 --name=nginx3 nginx
 
 stop:
 	docker stop nginx1 nginx2 nginx3
