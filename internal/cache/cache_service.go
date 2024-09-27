@@ -12,10 +12,12 @@ type CacheService struct {
 	cache *Cache
 }
 
-func NewCacheService(cache *Cache) *cacheService {
-	return &cacheService{
+func NewCacheService(cache *Cache) *CacheService {
+	cs := &CacheService{
 		cache: cache,
 	}
+	go cs.cache.StartCleanUp(utils.CleanupInterval)
+	return cs
 }
 
 func (s *cacheService) Get(key string) (*CacheItem, bool) {
