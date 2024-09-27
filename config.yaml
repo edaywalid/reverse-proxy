@@ -1,0 +1,8 @@
+servers:
+  - url: http://localhost:8001 
+  - url: http://localhost:8002
+  - url: http://localhost:8003
+https_port: 8443
+http_port: 8080
+cert_file: ./ssl/localhost.crt
+key_file: ./ssl/localhost.key
