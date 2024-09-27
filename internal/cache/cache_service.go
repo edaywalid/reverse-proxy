@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"bytes"
 	"io"
 	"net/http"
 	"time"
@@ -20,7 +21,7 @@ func NewCacheService(cache *Cache) *CacheService {
 	return cs
 }
 
-func (s *cacheService) Get(key string) (*CacheItem, bool) {
+func (s *CacheService) Get(key string) (*CacheItem, bool) {
 
 	item, ok := s.cache.GetItem(key)
 	if !ok || time.Since(item.Created()) > utils.CacheExpiration {
@@ -30,7 +31,7 @@ func (s *cacheService) Get(key string) (*CacheItem, bool) {
 	return &item, ok
 }
 
-func (s *cacheService) Set(key string, resp *http.Response) {
+func (s *CacheService) Set(key string, resp *http.Response) {
 	body, _ := io.ReadAll(resp.Body)
 	resp.Body.Close()
 
