@@ -8,7 +8,7 @@ import (
 	"github.com/edaywalid/reverse-proxy/pkg/utils"
 )
 
-type cacheService struct {
+type CacheService struct {
 	cache *Cache
 }
 
