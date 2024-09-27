@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/edaywalid/reverse-proxy/pkg/utils"
+	"github.com/rs/zerolog/log"
 )
 
 type CacheItem struct {
@@ -69,6 +70,7 @@ func (c *Cache) cleanUpExpired() {
 
 	for key, item := range c.items {
 		if time.Since(item.Created()) > utils.CacheExpiration {
+			log.Info().Str("key", key).Msg("Removing expired cache item")
 			delete(c.items, key)
 		}
 	}
@@ -78,7 +80,9 @@ func (c *Cache) StartCleanUp(interval time.Duration) {
 	go func() {
 		for {
 			time.Sleep(interval)
+			log.Info().Msg("Cleaning up expired cache items")
 			c.cleanUpExpired()
+			log.Info().Msg("Finished cleaning up expired cache items")
 		}
 	}()
 }
