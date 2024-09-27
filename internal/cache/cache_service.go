@@ -34,4 +34,6 @@ func (s *cacheService) Set(key string, resp *http.Response) {
 
 	item := NewCacheItem(body, resp.Header, resp.StatusCode)
 	s.cache.SetItem(key, *item)
+
+	resp.Body = io.NopCloser(bytes.NewReader(body))
 }
